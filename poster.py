@@ -1,4 +1,6 @@
 # pyrefly: ignore [missing-import]
+from groq.types.chat import chat_completion_assistant_message_param
+# pyrefly: ignore [missing-import]
 from playwright.sync_api import sync_playwright
 
 
@@ -23,6 +25,16 @@ def post_to_linkedin(post_text):
             )
 
             page.wait_for_timeout(5000)
+
+            print("URL:", page.url)
+            print("TITLE:", page.title())
+
+            page.screenshot(path="linkedin_debug.png")
+
+            try:
+                print(page.content()[:2000])
+            except Exception as e:
+                print("Could not print page content:", e)
 
             page.locator(
                 '[aria-label="Start a post"]'
